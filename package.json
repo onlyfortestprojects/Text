@@ -1,0 +1,15 @@
+{
+  "name": "convert-text-to-speach",
+  "version": "1.0.0",
+  "description": "",
+  "main": "text.js",
+  "scripts": {
+    "test": "npx tailwindcss -i  text.css -o ./output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
