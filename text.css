@@ -55,6 +55,7 @@ textarea::-webkit-scrollbar-thumb {
 	text-shadow: 0 0 3px;
 	margin-right: 20px;
 	min-height: 50px;
+	color: #000;
 }
 
 @media (max-width: 768px) {
@@ -68,7 +69,7 @@ textarea::-webkit-scrollbar-thumb {
 		padding: 10px;
 		font-size: 1.2rem;
 		margin-bottom: 20px;
-		width: 100%;
+		width: 90%;
 	}
 }
 
@@ -76,4 +77,5 @@ textarea::-webkit-scrollbar-thumb {
 	font-family: 'Lilita One', cursive;
 	outline: none;
 	transition: 0.3s ease;
+	
 }
