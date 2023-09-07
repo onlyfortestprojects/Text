@@ -54,10 +54,7 @@ let _speechSynth
 let _voices
 const _cache = {}
 
-/**
- * retries until there have been voices loaded. No stopper flag included in this example. 
- * Note that this function assumes, that there are voices installed on the host system.
- */
+
 
 function loadVoicesWhenAvailable (onComplete = () => {}) {
   _speechSynth = window.speechSynthesis
@@ -71,9 +68,6 @@ function loadVoicesWhenAvailable (onComplete = () => {}) {
   }
 }
 
-/**
- * Returns the first found voice for a given language code.
- */
 
 function getVoices (locale) {
   if (!_speechSynth) {
@@ -88,9 +82,6 @@ function getVoices (locale) {
 
 function playByText (locale, text, onEnd) {
   const voices = getVoices(locale)
-
-  // TODO load preference here, e.g. male / female etc.
-  // TODO but for now we just use the first occurrence
   const utterance = new window.SpeechSynthesisUtterance()
   utterance.voice = voices[0]
   utterance.pitch = 1
