@@ -1,26 +1,19 @@
-"use strict"
+"use strict";
 
 // // Selectors
 // const textAreaEle = document.querySelector("textarea")
 // const listenButton = document.querySelector("#listen")
 // const voiceSelectEle = document.querySelector("select");
 
-
-
-
 // // Variables
 // let speech = new SpeechSynthesisUtterance();
 // let voices = [];
-
-
-
 
 // // Functions
 // function speakTextToVoice() {
 //   speech.text = textAreaEle.value;
 //   window.speechSynthesis.speak(speech);
 // }
-
 
 // function getVoicesToSelect() {
 //   // Clear existing options
@@ -43,69 +36,57 @@
 
 // listenButton.addEventListener("click", () => speakTextToVoice());
 
+let _speechSynth;
+let _voices;
+const _cache = {};
 
-
-
-
-
-
-
-let _speechSynth
-let _voices
-const _cache = {}
-
-
-
-function loadVoicesWhenAvailable (onComplete = () => {}) {
-  _speechSynth = window.speechSynthesis
-  const voices = _speechSynth.getVoices()
+function loadVoicesWhenAvailable(onComplete = () => {}) {
+  _speechSynth = window.speechSynthesis;
+  const voices = _speechSynth.getVoices();
 
   if (voices.length !== 0) {
-    _voices = voices
-    onComplete()
+    _voices = voices;
+    onComplete();
   } else {
-    return setTimeout(function () { loadVoicesWhenAvailable(onComplete) }, 100)
+    return setTimeout(function () {
+      loadVoicesWhenAvailable(onComplete);
+    }, 100);
   }
 }
 
-
-function getVoices (locale) {
+function getVoices(locale) {
   if (!_speechSynth) {
-    throw new Error('Browser does not support speech synthesis')
+    document.body += `<section>
+		Browser does not support speech synthesis
+		</section>`;
   }
-  if (_cache[locale]) return _cache[locale]
+  if (_cache[locale]) return _cache[locale];
 
-  _cache[locale] = _voices.filter(voice => voice.lang === locale)
-  return _cache[locale]
+  _cache[locale] = _voices.filter((voice) => voice.lang === locale);
+  return _cache[locale];
 }
 
-
-function playByText (locale, text, onEnd) {
-  const voices = getVoices(locale)
-  const utterance = new window.SpeechSynthesisUtterance()
-  utterance.voice = voices[0]
-  utterance.pitch = 1
-  utterance.rate = 1
-  utterance.voiceURI = 'native'
-  utterance.volume = 1
-  utterance.rate = 1
-  utterance.pitch = 0.8
-  utterance.text = text
-  utterance.lang = locale
+function playByText(locale, text, onEnd) {
+  const voices = getVoices(locale);
+  const utterance = new window.SpeechSynthesisUtterance();
+  utterance.voice = voices[0];
+  utterance.pitch = 1;
+  utterance.rate = 1;
+  utterance.voiceURI = "native";
+  utterance.volume = 1;
+  utterance.rate = 1;
+  utterance.pitch = 0.8;
+  utterance.text = text;
+  utterance.lang = locale;
 
   if (onEnd) {
-    utterance.onend = onEnd
+    utterance.onend = onEnd;
   }
 
-  _speechSynth.cancel() // cancel current speak, if any is running
-  _speechSynth.speak(utterance)
+  _speechSynth.cancel(); // cancel current speak, if any is running
+  _speechSynth.speak(utterance);
 }
 
-// on document ready
-loadVoicesWhenAvailable(function () {
- alert("loaded")
-})
-
-function speak () {
-  setTimeout(() => playByText("en-US", "Hello, world"), 300)
+function speak() {
+  setTimeout(() => playByText("en-US", "Hello, world"), 300);
 }
