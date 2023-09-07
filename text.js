@@ -23,21 +23,16 @@ function speakTextToVoice() {
 
 
 function getVoicesToSelect() {
+  // Clear existing options
+  voiceSelectEle.innerHTML = '';
+
   voices = window.speechSynthesis.getVoices();
-  speech.voice = voices[0]; // speak with first voice the default
 
-  voices.forEach(
-    (voice, i) => {
-			const option = new Option(voice.name, i)
-			option.value = voice.name
-			voiceSelectEle.options[i] = option
-		}
-  );
+  voices.forEach((voice, i) => {
+    const option = new Option(voice.name, voice.name); // Use voice name as both text and value
+    voiceSelectEle.add(option);
+  });
 }
-getVoicesToSelect()
-
-
-
 
 // Events
 window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
