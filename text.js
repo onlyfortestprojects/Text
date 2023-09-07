@@ -27,7 +27,11 @@ function getVoicesToSelect() {
   speech.voice = voices[0]; // speak with first voice the default
 
   voices.forEach(
-    (voice, i) => (voiceSelectEle.options[i] = new Option(voice.name, i))
+    (voice, i) => {
+			const option = new Option(voice.name, i)
+			option.value = voice.name
+			voiceSelectEle.options[i] = option
+		}
   );
 }
 
@@ -35,7 +39,7 @@ function getVoicesToSelect() {
 
 
 // Events
-// window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
+window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
 
 voiceSelectEle.addEventListener("change", () => {
   speech.voice = voices[voiceSelectEle.value];
