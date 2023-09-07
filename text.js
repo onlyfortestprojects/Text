@@ -55,11 +55,12 @@ function loadVoicesWhenAvailable(onComplete = () => {}) {
 }
 
 function getVoices(locale) {
+	console.log(_speechSynth);
   if (!_speechSynth) {
-    document.body += `<section>
-		Browser does not support speech synthesis
-		</section>`;
-  }
+    document.body.innerHTML += `<section>"Browser does not support speech synthesis"</section>`;
+  } else {
+    document.body.innerHTML += `<section>"Browser support speech synthesis"</section>`;
+	}
   if (_cache[locale]) return _cache[locale];
 
   _cache[locale] = _voices.filter((voice) => voice.lang === locale);
@@ -86,6 +87,11 @@ function playByText(locale, text, onEnd) {
   _speechSynth.cancel(); // cancel current speak, if any is running
   _speechSynth.speak(utterance);
 }
+
+// on document ready
+loadVoicesWhenAvailable(function () {
+  alert("loaded");
+});
 
 function speak() {
   setTimeout(() => playByText("en-US", "Hello, world"), 300);
