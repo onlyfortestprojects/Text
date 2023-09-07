@@ -4,45 +4,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Barriecito&family=Creepster&family=Fredericka+the+Great&family=Lilita+One&display=swap');
 
 
-#container{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+#container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
-#container h1{
-    font-family: 'Lilita One', cursive;
+
+#container h1 {
+	font-family: 'Lilita One', cursive;
 }
-#container h1 span{
-    font-family: 'Lilita One', cursive;
-    background: darkgoldenrod;
-    padding:5px;
-    border-radius: 10px;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 2px black;
+
+@media (max-width: 768px) {
+	#container h1 {
+		font-size: 2rem;
+	}
 }
-textarea{
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    font-family: 'Lilita One', cursive;
+
+#container h1 span {
+	font-family: 'Lilita One', cursive;
+	background: darkgoldenrod;
+	padding: 5px;
+	border-radius: 10px;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 2px black;
 }
-textarea::-webkit-scrollbar{
-    width:6px;
+
+textarea {
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	font-family: 'Lilita One', cursive;
 }
-textarea::-webkit-scrollbar-track{
-    background: darkkhaki;
+
+textarea::-webkit-scrollbar {
+	width: 6px;
 }
-textarea::-webkit-scrollbar-thumb{
-    background: whitesmoke;
+
+textarea::-webkit-scrollbar-track {
+	background: darkkhaki;
 }
-#tools select{
-    border:2px solid grey;
-    outline: none;
-    text-shadow: 0 0 3px;
+
+textarea::-webkit-scrollbar-thumb {
+	background: whitesmoke;
 }
-#listen{
-    font-family: 'Lilita One', cursive;
-    outline: none;
-    transition: 0.3s ease;
+
+#tools select {
+	border: 2px solid grey;
+	outline: none;
+	text-shadow: 0 0 3px;
+	margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+	#tools {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 768px) {
+	#tools select {
+		padding: 10px;
+		font-size: 1.2rem;
+		margin-bottom: 20px;
+		width: 100%;
+	}
+}
+
+#listen {
+	font-family: 'Lilita One', cursive;
+	outline: none;
+	transition: 0.3s ease;
 }

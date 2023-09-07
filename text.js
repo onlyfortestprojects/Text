@@ -1,25 +1,44 @@
-let speech = new SpeechSynthesisUtterance();
+"use strict"
 
+// Selectors
+const textAreaEle = document.querySelector("textarea")
+const listenButton = document.querySelector("#listen")
+const voiceSelectEle = document.querySelector("select");
+
+
+
+
+// Variables
+let speech = new SpeechSynthesisUtterance();
 let voices = [];
 
-let btn = document.querySelector("#listen");
-
-let voiceselect = document.querySelector("select");
-
-window.speechSynthesis.onvoiceschanged = ()=>{
-    voices = window.speechSynthesis.getVoices();
-    speech.voice = voices[0]; // speak with first voice the default
 
 
-    voices.forEach((voice, i) => (voiceselect.options[i] = new Option(voice.name, i)))
 
-};
+// Functions
+function speakTextToVoice() {
+  speech.text = textAreaEle.value;
+  window.speechSynthesis.speak(speech);
+}
 
-voiceselect.addEventListener("change",()=>{
-    speech.voice = voices[voiceselect.value]
-})
 
-btn.addEventListener("click",()=>{
-    speech.text = document.querySelector("textarea").value;
-    window.speechSynthesis.speak(speech);
-})
+function getVoicesToSelect() {
+  voices = window.speechSynthesis.getVoices();
+  speech.voice = voices[0]; // speak with first voice the default
+
+  voices.forEach(
+    (voice, i) => (voiceSelectEle.options[i] = new Option(voice.name, i))
+  );
+}
+
+
+
+
+// Events
+window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
+
+voiceSelectEle.addEventListener("change", () => {
+  speech.voice = voices[voiceSelectEle.value];
+});
+
+listenButton.addEventListener("click", () => speakTextToVoice());
