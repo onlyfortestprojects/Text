@@ -90,9 +90,9 @@ function playByText(locale, text, onEnd) {
 
 // on document ready
 loadVoicesWhenAvailable(function () {
-  alert("loaded");
+  console.log('Loaded');
 });
 
 function speak() {
-  setTimeout(() => playByText("en-US", "Hello, world"), 300);
+	playByText("en-US", "Hello, world")
 }
