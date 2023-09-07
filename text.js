@@ -35,7 +35,7 @@ function getVoicesToSelect() {
 
 
 // Events
-window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
+// window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
 
 voiceSelectEle.addEventListener("change", () => {
   speech.voice = voices[voiceSelectEle.value];
