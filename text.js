@@ -1,6 +1,5 @@
 "use strict";
 
-// Selectors
 const textAreaEle = document.querySelector("textarea");
 const listenButton = document.querySelector("#listen");
 const voiceSelectEle = document.querySelector("select");
@@ -29,13 +28,9 @@ window.speechSynthesis.onvoiceschanged = () => loadVoices();
 
 
 
-// Variables
+
 let speech = new SpeechSynthesisUtterance();
 
-
-
-
-// Functions
 function speakTextToVoice() {
   speech.text = textAreaEle.value;
 
@@ -47,12 +42,4 @@ function speakTextToVoice() {
   speechSynthesis.speak(speech);
 }
 
-
-
-
-
-
-
-
-// Events
 listenButton.addEventListener("click", () => speakTextToVoice());
