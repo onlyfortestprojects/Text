@@ -1,98 +1,38 @@
 "use strict";
 
-// // Selectors
-// const textAreaEle = document.querySelector("textarea")
-// const listenButton = document.querySelector("#listen")
-// const voiceSelectEle = document.querySelector("select");
+// Selectors
+const textAreaEle = document.querySelector("textarea")
+const listenButton = document.querySelector("#listen")
+const voiceSelectEle = document.querySelector("select");
 
-// // Variables
-// let speech = new SpeechSynthesisUtterance();
-// let voices = [];
+// Variables
+let speech = new SpeechSynthesisUtterance();
+let voices = [];
 
-// // Functions
-// function speakTextToVoice() {
-//   speech.text = textAreaEle.value;
-//   window.speechSynthesis.speak(speech);
-// }
-
-// function getVoicesToSelect() {
-//   // Clear existing options
-//   voiceSelectEle.innerHTML = '';
-
-//   voices = window.speechSynthesis.getVoices();
-
-//   voices.forEach((voice, i) => {
-//     const option = new Option(voice.name, voice.name); // Use voice name as both text and value
-//     voiceSelectEle.add(option);
-//   });
-// }
-
-// // Events
-// window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
-
-// voiceSelectEle.addEventListener("change", () => {
-//   speech.voice = voices[voiceSelectEle.value];
-// });
-
-// listenButton.addEventListener("click", () => speakTextToVoice());
-
-let _speechSynth;
-let _voices;
-const _cache = {};
-
-function loadVoicesWhenAvailable(onComplete = () => {}) {
-  _speechSynth = window.speechSynthesis;
-  const voices = _speechSynth.getVoices();
-
-  if (voices.length !== 0) {
-    _voices = voices;
-    onComplete();
-  } else {
-    return setTimeout(function () {
-      loadVoicesWhenAvailable(onComplete);
-    }, 100);
-  }
+// Functions
+function speakTextToVoice() {
+  speech.text = textAreaEle.value;
+  window.speechSynthesis.speak(speech);
 }
 
-function getVoices(locale) {
-	console.log(_speechSynth);
-  if (!_speechSynth) {
-    document.body.innerHTML += `<section>"Browser does not support speech synthesis"</section>`;
-  } else {
-    document.body.innerHTML += `<section>"Browser support speech synthesis"</section>`;
-	}
-  if (_cache[locale]) return _cache[locale];
+function getVoicesToSelect() {
+  // Clear existing options
+  voiceSelectEle.innerHTML = '';
 
-  _cache[locale] = _voices.filter((voice) => voice.lang === locale);
-  return _cache[locale];
+  voices = window.speechSynthesis.getVoices();
+
+  voices.forEach((voice, i) => {
+    // const option = new Option(voice.name, voice.name); // Use voice name as both text and value
+    // voiceSelectEle.add(option);
+		document.body.innerHTML += `<div>${voice.name}</div>`
+  });
 }
 
-function playByText(locale, text, onEnd) {
-  const voices = getVoices(locale);
-  const utterance = new window.SpeechSynthesisUtterance();
-  utterance.voice = voices[0];
-  utterance.pitch = 1;
-  utterance.rate = 1;
-  utterance.voiceURI = "native";
-  utterance.volume = 1;
-  utterance.rate = 1;
-  utterance.pitch = 0.8;
-  utterance.text = text;
-  utterance.lang = locale;
+// Events
+window.speechSynthesis.onvoiceschanged = () => getVoicesToSelect();
 
-  if (onEnd) {
-    utterance.onend = onEnd;
-  }
-
-  _speechSynth.cancel(); // cancel current speak, if any is running
-  _speechSynth.speak(utterance);
-}
-
-// on document ready
-loadVoicesWhenAvailable(function () {
-  console.log('Loaded');
+voiceSelectEle.addEventListener("change", () => {
+  speech.voice = voices[voiceSelectEle.value];
 });
 
-function speak() {
-	playByText("en-US", "Hello, world")
-}
+listenButton.addEventListener("click", () => speakTextToVoice());
